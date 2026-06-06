@@ -1,23 +1,19 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { Routes, Route } from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
 
   return (
 
-    <div className="text-center mt-10">
+    <Routes>
 
-      <h1 className="text-5xl font-bold text-blue-500">
-        Bug Tracker Frontend
-      </h1>
+      <Route
+        path="/"
+        element={<LoginPage />}
+      />
 
-    </div>
-  )
+    </Routes>
+  );
 }
 
-
-
-export default App
+export default App;
