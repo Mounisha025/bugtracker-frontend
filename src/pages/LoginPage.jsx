@@ -1,19 +1,56 @@
 import { useState } from "react";
 
+import { useNavigate } from "react-router-dom";
+
+import API from "../api/axiosConfig";
+
 function LoginPage() {
+
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
 
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e) => {
 
     e.preventDefault();
 
-    console.log({
-      email,
-      password,
-    });
+    try {
+
+      const response = await API.post(
+        "/auth/login",
+
+        {
+          email,
+          password,
+        }
+      );
+      console.log(response.data);
+
+      const token = response.data;
+
+      // Save token
+      localStorage.setItem(
+        "token",
+        token
+      );
+
+      console.log("JWT Token:", token);
+
+      // Redirect
+      navigate("/dashboard");
+
+    } catch (err) {
+
+      console.error(err);
+
+      setError(
+        "Invalid email or password"
+      );
+    }
   };
 
   return (
@@ -66,6 +103,15 @@ function LoginPage() {
             />
 
           </div>
+
+          {
+            error && (
+
+              <p className="text-red-500">
+                {error}
+              </p>
+            )
+          }
 
           <button
             type="submit"

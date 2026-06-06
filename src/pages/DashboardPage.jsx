@@ -1,8 +1,13 @@
 function DashboardPage() {
 
   return (
-    <div>
-      <h1>Dashboard Page</h1>
+
+    <div className="p-10">
+
+      <h1 className="text-4xl font-bold">
+        Dashboard
+      </h1>
+
     </div>
   );
 }
