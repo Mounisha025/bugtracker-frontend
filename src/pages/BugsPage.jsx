@@ -30,6 +30,9 @@ function BugsPage() {
   const [error, setError] =
     useState("");
 
+    const [searchTerm, setSearchTerm] =
+  useState("");
+
   // ==============================
   // FETCH BUGS ON PAGE LOAD
   // ==============================
@@ -166,6 +169,16 @@ function BugsPage() {
   // ==============================
   // UI
   // ==============================
+
+  const filteredBugs =
+  bugs.filter((bug) =>
+
+    bug.title
+      .toLowerCase()
+      .includes(
+        searchTerm.toLowerCase()
+      )
+  );
 
   return (
 
@@ -308,6 +321,22 @@ function BugsPage() {
 
           </form>
 
+     {/* Search Bar */}
+
+<div className="bg-white shadow-lg rounded-xl p-4 mb-6">
+
+  <input
+    type="text"
+    placeholder="Search bugs..."
+    className="w-full border-2 border-blue-400 p-4 rounded-lg"
+    value={searchTerm}
+    onChange={(e) =>
+      setSearchTerm(e.target.value)
+    }
+  />
+
+</div>  
+
           {/* ==============================
               BUGS LIST
           ============================== */}
@@ -315,7 +344,7 @@ function BugsPage() {
           <div className="space-y-6">
 
             {
-              bugs.map((bug) => (
+              filteredBugs.map((bug) => (
 
                 <div
                   key={bug.id}
