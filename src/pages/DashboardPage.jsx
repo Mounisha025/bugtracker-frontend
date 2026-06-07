@@ -1,5 +1,13 @@
 import { useEffect, useState } from "react";
 
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  Legend
+} from "recharts";
+
 import API from "../api/axiosConfig";
 
 import Navbar from "../components/Navbar";
@@ -53,6 +61,30 @@ function DashboardPage() {
         bug.status === "IN_PROGRESS"
     ).length;
 
+const chartData = [
+
+  {
+    name: "OPEN",
+    value: openBugs,
+  },
+
+  {
+    name: "IN_PROGRESS",
+    value: inProgressBugs,
+  },
+
+  {
+    name: "RESOLVED",
+    value: resolvedBugs,
+  },
+];
+
+const COLORS = [
+  "#ef4444",
+  "#eab308",
+  "#22c55e",
+];
+
   return (
 
     <div className="min-h-screen bg-gray-100">
@@ -74,6 +106,54 @@ function DashboardPage() {
           {/* Statistics Cards */}
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+            {/* Charts Section */}
+
+<div className="bg-white shadow-lg rounded-xl p-6 mt-10">
+
+  <h2 className="text-2xl font-bold mb-6">
+
+    Bug Status Analytics
+
+  </h2>
+
+  <PieChart
+    width={400}
+    height={300}
+  >
+
+    <Pie
+      data={chartData}
+      cx="50%"
+      cy="50%"
+      outerRadius={100}
+      dataKey="value"
+      label
+    >
+
+      {
+        chartData.map(
+          (entry, index) => (
+
+            <Cell
+              key={`cell-${index}`}
+              fill={
+                COLORS[index]
+              }
+            />
+          )
+        )
+      }
+
+    </Pie>
+
+    <Tooltip />
+
+    <Legend />
+
+  </PieChart>
+
+</div>
 
             {/* Total Bugs */}
 

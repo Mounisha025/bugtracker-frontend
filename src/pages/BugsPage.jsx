@@ -381,11 +381,26 @@ function BugsPage() {
 
                     {/* Status */}
 
-                    <span className="bg-green-200 px-4 py-2 rounded-lg font-medium">
+                    <span
+  className={`px-4 py-2 rounded-lg font-medium text-white
 
-                      {bug.status}
+    ${bug.status === "OPEN"
+      ? "bg-red-500"
+      : ""}
 
-                    </span>
+    ${bug.status === "IN_PROGRESS"
+      ? "bg-yellow-500"
+      : ""}
+
+    ${bug.status === "RESOLVED"
+      ? "bg-green-500"
+      : ""}
+  `}
+>
+
+  {bug.status}
+
+</span>
 
                     {/* Update Status */}
 
