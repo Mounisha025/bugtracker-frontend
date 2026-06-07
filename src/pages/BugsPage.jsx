@@ -8,6 +8,10 @@ import Sidebar from "../components/Sidebar";
 
 function BugsPage() {
 
+  // ==============================
+  // STATES
+  // ==============================
+
   const [bugs, setBugs] =
     useState([]);
 
@@ -26,11 +30,19 @@ function BugsPage() {
   const [error, setError] =
     useState("");
 
+  // ==============================
+  // FETCH BUGS ON PAGE LOAD
+  // ==============================
+
   useEffect(() => {
 
     fetchBugs();
 
   }, []);
+
+  // ==============================
+  // FETCH ALL BUGS
+  // ==============================
 
   const fetchBugs = async () => {
 
@@ -50,6 +62,10 @@ function BugsPage() {
       );
     }
   };
+
+  // ==============================
+  // CREATE BUG
+  // ==============================
 
   const handleCreateBug =
     async (e) => {
@@ -77,7 +93,7 @@ function BugsPage() {
         setPriority("LOW");
         setStatus("OPEN");
 
-        // Refresh bugs
+        // Refresh bug list
         fetchBugs();
 
       } catch (err) {
@@ -90,65 +106,151 @@ function BugsPage() {
       }
     };
 
+  // ==============================
+  // DELETE BUG
+  // ==============================
+
+  const handleDeleteBug =
+    async (id) => {
+
+      try {
+
+        await API.delete(
+          `/bugs/${id}`
+        );
+
+        fetchBugs();
+
+      } catch (err) {
+
+        console.error(err);
+
+        setError(
+          "Failed to delete bug"
+        );
+      }
+    };
+
+  // ==============================
+  // UPDATE BUG STATUS
+  // ==============================
+
+  const handleUpdateStatus =
+    async (bug, newStatus) => {
+
+      try {
+
+        const updatedBug = {
+
+          ...bug,
+          status: newStatus,
+        };
+
+        await API.put(
+          `/bugs/${bug.id}`,
+          updatedBug
+        );
+
+        fetchBugs();
+
+      } catch (err) {
+
+        console.error(err);
+
+        setError(
+          "Failed to update bug status"
+        );
+      }
+    };
+
+  // ==============================
+  // UI
+  // ==============================
+
   return (
 
-    <div>
+    <div className="min-h-screen bg-gray-100">
+
+      {/* Navbar */}
 
       <Navbar />
 
       <div className="flex">
 
+        {/* Sidebar */}
+
         <Sidebar />
+
+        {/* Main Content */}
 
         <div className="p-10 w-full">
 
+          {/* Page Title */}
+
           <h1 className="text-4xl font-bold mb-8">
-            Bugs
+
+            Bugs Management
+
           </h1>
+
+          {/* Error Message */}
 
           {
             error && (
 
-              <p className="text-red-500 mb-4">
+              <p className="text-red-500 mb-6">
+
                 {error}
+
               </p>
             )
           }
 
-          {/* Create Bug Form */}
+          {/* ==============================
+              CREATE BUG FORM
+          ============================== */}
 
           <form
             onSubmit={handleCreateBug}
-            className="bg-white shadow p-6 rounded-lg mb-10"
+            className="bg-white shadow-lg rounded-xl p-6 mb-10"
           >
 
-            <h2 className="text-2xl font-bold mb-4">
-              Create Bug
+            <h2 className="text-2xl font-bold mb-6">
+
+              Create New Bug
+
             </h2>
+
+            {/* Title */}
 
             <input
               type="text"
               placeholder="Bug Title"
-              className="w-full border p-3 rounded mb-4"
+              className="w-full border p-3 rounded-lg mb-4"
               value={title}
               onChange={(e) =>
                 setTitle(e.target.value)
               }
+              required
             />
+
+            {/* Description */}
 
             <textarea
               placeholder="Bug Description"
-              className="w-full border p-3 rounded mb-4"
+              className="w-full border p-3 rounded-lg mb-4"
+              rows="4"
               value={description}
               onChange={(e) =>
                 setDescription(e.target.value)
               }
+              required
             />
 
-            {/* Priority */}
+            {/* Priority Dropdown */}
 
             <select
-              className="w-full border p-3 rounded mb-4"
+              className="w-full border p-3 rounded-lg mb-4"
               value={priority}
               onChange={(e) =>
                 setPriority(e.target.value)
@@ -169,10 +271,10 @@ function BugsPage() {
 
             </select>
 
-            {/* Status */}
+            {/* Status Dropdown */}
 
             <select
-              className="w-full border p-3 rounded mb-4"
+              className="w-full border p-3 rounded-lg mb-6"
               value={status}
               onChange={(e) =>
                 setStatus(e.target.value)
@@ -193,48 +295,108 @@ function BugsPage() {
 
             </select>
 
+            {/* Submit Button */}
+
             <button
               type="submit"
-              className="bg-red-500 text-white px-6 py-3 rounded"
+              className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg"
             >
+
               Create Bug
+
             </button>
 
           </form>
 
-          {/* Bugs List */}
+          {/* ==============================
+              BUGS LIST
+          ============================== */}
 
-          <div className="space-y-4">
+          <div className="space-y-6">
 
             {
               bugs.map((bug) => (
 
                 <div
                   key={bug.id}
-                  className="border p-5 rounded-lg shadow"
+                  className="bg-white shadow-lg rounded-xl p-6"
                 >
 
+                  {/* Title */}
+
                   <h2 className="text-2xl font-bold">
+
                     {bug.title}
+
                   </h2>
 
-                  <p className="mt-2">
+                  {/* Description */}
+
+                  <p className="mt-3 text-gray-700">
+
                     {bug.description}
+
                   </p>
 
-                  <div className="flex gap-4 mt-4">
+                  {/* Priority + Status */}
 
-                    <span className="bg-yellow-200 px-3 py-1 rounded">
+                  <div className="flex gap-4 mt-5 items-center flex-wrap">
+
+                    {/* Priority */}
+
+                    <span className="bg-yellow-200 px-4 py-2 rounded-lg font-medium">
 
                       {bug.priority}
 
                     </span>
 
-                    <span className="bg-green-200 px-3 py-1 rounded">
+                    {/* Status */}
+
+                    <span className="bg-green-200 px-4 py-2 rounded-lg font-medium">
 
                       {bug.status}
 
                     </span>
+
+                    {/* Update Status */}
+
+                    <select
+                      value={bug.status}
+                      onChange={(e) =>
+                        handleUpdateStatus(
+                          bug,
+                          e.target.value
+                        )
+                      }
+                      className="border p-2 rounded-lg"
+                    >
+
+                      <option value="OPEN">
+                        OPEN
+                      </option>
+
+                      <option value="IN_PROGRESS">
+                        IN_PROGRESS
+                      </option>
+
+                      <option value="RESOLVED">
+                        RESOLVED
+                      </option>
+
+                    </select>
+
+                    {/* Delete Button */}
+
+                    <button
+                      onClick={() =>
+                        handleDeleteBug(bug.id)
+                      }
+                      className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
+                    >
+
+                      Delete
+
+                    </button>
 
                   </div>
 
