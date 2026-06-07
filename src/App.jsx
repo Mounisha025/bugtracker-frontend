@@ -8,6 +8,8 @@ import UsersPage from "./pages/UsersPage";
 
 import ProjectsPage from "./pages/ProjectsPage";
 
+import BugsPage from "./pages/BugsPage";
+
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -46,6 +48,17 @@ function App() {
     <ProtectedRoute>
 
       <ProjectsPage />
+
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/bugs"
+  element={
+    <ProtectedRoute>
+
+      <BugsPage />
 
     </ProtectedRoute>
   }
