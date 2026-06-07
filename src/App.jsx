@@ -6,6 +6,8 @@ import DashboardPage from "./pages/DashboardPage";
 
 import UsersPage from "./pages/UsersPage";
 
+import ProjectsPage from "./pages/ProjectsPage";
+
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -38,7 +40,21 @@ function App() {
         }
       />
 
+      <Route
+  path="/projects"
+  element={
+    <ProtectedRoute>
+
+      <ProjectsPage />
+
+    </ProtectedRoute>
+  }
+/>
+
+
     </Routes>
+
+    
   );
 }
 

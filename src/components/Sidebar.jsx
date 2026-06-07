@@ -24,11 +24,13 @@ function Sidebar() {
           </Link>
         </li>
 
-        <li>
-          <Link to="/projects">
-            Projects
-          </Link>
-        </li>
+        <Link
+    to="/projects"
+    className="block hover:text-blue-400"
+  >
+    Projects
+  </Link>
+
 
         <li>
           <Link to="/bugs">
@@ -37,6 +39,11 @@ function Sidebar() {
         </li>
 
       </ul>
+
+      <li>
+
+  
+</li>
 
     </div>
   );
