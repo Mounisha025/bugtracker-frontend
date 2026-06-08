@@ -109,7 +109,7 @@ const COLORS = [
 
             {/* Charts Section */}
 
-<div className="bg-white shadow-lg rounded-xl p-6 mt-10">
+<div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-lg">
 
   <h2 className="text-2xl font-bold mb-6">
 

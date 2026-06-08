@@ -225,7 +225,7 @@ function BugsPage() {
 
           <form
             onSubmit={handleCreateBug}
-            className="bg-white shadow-lg rounded-xl p-6 mb-10"
+            className="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-lg mb-10"
           >
 
             <h2 className="text-2xl font-bold mb-6">
@@ -328,7 +328,16 @@ function BugsPage() {
   <input
     type="text"
     placeholder="Search bugs..."
-    className="w-full border-2 border-blue-400 p-4 rounded-lg"
+    className="
+w-full
+bg-slate-900
+border border-slate-700
+text-white
+p-3
+rounded-xl
+outline-none
+focus:border-blue-500
+"
     value={searchTerm}
     onChange={(e) =>
       setSearchTerm(e.target.value)
@@ -348,8 +357,8 @@ function BugsPage() {
 
                 <div
                   key={bug.id}
-                  className="bg-white shadow-lg rounded-xl p-6"
-                >
+                  className="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-lg">
+                
 
                   {/* Title */}
 

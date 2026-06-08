@@ -77,7 +77,16 @@ function LoginPage() {
             <input
               type="email"
               placeholder="Enter email"
-              className="w-full border p-3 rounded-lg"
+             className="
+w-full
+bg-slate-900
+border border-slate-700
+text-white
+p-3
+rounded-xl
+outline-none
+focus:border-blue-500
+"
               value={email}
               onChange={(e) =>
                 setEmail(e.target.value)
@@ -95,7 +104,16 @@ function LoginPage() {
             <input
               type="password"
               placeholder="Enter password"
-              className="w-full border p-3 rounded-lg"
+              className="
+w-full
+bg-slate-900
+border border-slate-700
+text-white
+p-3
+rounded-xl
+outline-none
+focus:border-blue-500
+"
               value={password}
               onChange={(e) =>
                 setPassword(e.target.value)
